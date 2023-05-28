@@ -108,7 +108,7 @@ const RecipeSearch = () => {
     setSelectedRecipe(null)
   }
   const RecipeCard = ({ recipe }) => (
-    <div className="flex flex-col items-center justify-between overflow-hidden rounded-md bg-white shadow-md">
+    <div className="flex flex-col items-center justify-between overflow-hidden rounded-md bg-indigo-100 shadow-md">
       <img
         src={recipe.image}
         alt={recipe.title}
@@ -119,7 +119,7 @@ const RecipeSearch = () => {
         <p className="text-gray-800">{recipe.summary}</p>
         <div className="mt-4 flex justify-center">
           <button
-            className="rounded-md bg-blue-500 px-4 py-2 font-medium text-white focus:outline-none"
+            className="rounded-md bg-indigo-500 px-4 py-2 font-medium text-white focus:outline-none"
             onClick={(e) => {
               e.stopPropagation()
               showRecipeDetails(recipe)
@@ -134,7 +134,7 @@ const RecipeSearch = () => {
 
   const RecipeDetails = ({ recipe }) => {
     return (
-      <div className="mt-4 flex flex-col items-center">
+      <div className="mt-4 flex flex-col items-center bg-indigo-100">
         <div className="mb-2 flex w-full max-w-lg items-center justify-between">
           <h3 className="text-xl font-semibold text-gray-800">
             Recipe Details:
@@ -173,9 +173,9 @@ const RecipeSearch = () => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-blue-500">
+    <div className="flex min-h-screen flex-col bg-indigo-500">
       <div
-        className="flex flex-1 flex-col items-center justify-center bg-blue-500 py-16 text-center text-white"
+        className="flex flex-1 flex-col items-center justify-center bg-indigo-500 py-16 text-center text-white"
         style={{
           backgroundImage:
             "url('https://www.vangoghmuseum.nl/en/collection/s0032V1962?v=1')",
@@ -194,17 +194,17 @@ const RecipeSearch = () => {
             value={ingredientSearchQuery}
             onChange={(event) => setIngredientSearchQuery(event.target.value)}
             placeholder="Enter ingredients separated by commas"
-            className="mb-4 w-11/12 rounded-md border border-gray-300 px-4 py-2 text-base text-black focus:border-blue-500 focus:outline-none md:w-96"
+            className="mb-4 w-11/12 rounded-md border border-gray-300 px-4 py-2 text-base text-black focus:border-indigo-500 focus:outline-none md:w-96"
           />
           <button
             onClick={searchByIngredients}
-            className="inline-block w-11/12 rounded-md bg-white px-6 py-3 text-base font-medium text-blue-500 hover:bg-blue-100 focus:bg-blue-100 focus:outline-none md:w-auto"
+            className="inline-block w-11/12 rounded-md bg-white px-6 py-3 text-base font-medium text-indigo-500 hover:bg-indigo-100 focus:bg-indigo-100 focus:outline-none md:w-auto"
           >
             Search
           </button>
         </div>
       </div>
-      <div className="flex flex-1 flex-col items-center justify-center bg-white p-6 shadow-md">
+      <div className="flex flex-1 flex-col items-center justify-center bg-indigo-300 p-6 shadow-md">
         {ingredientLoading && (
           <div className="italic text-gray-800">Loading...</div>
         )}
@@ -219,7 +219,7 @@ const RecipeSearch = () => {
                   {ingredient.name}
                   <button
                     onClick={() => showIngredientRecipes(ingredient)}
-                    className="ml-2 inline-block rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white focus:bg-blue-600 focus:outline-none"
+                    className="ml-2 inline-block rounded-md bg-indigo-500 px-4 py-2 text-sm font-medium text-white focus:bg-indigo-600 focus:outline-none"
                   >
                     Show Recipes
                   </button>
@@ -246,7 +246,7 @@ const RecipeSearch = () => {
       </div>
       {selectedRecipe && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="rounded-lg bg-white p-6">
+          <div className="rounded-lg bg-indigo-100 p-6">
             <RecipeDetails recipe={selectedRecipe} />
           </div>
         </div>
