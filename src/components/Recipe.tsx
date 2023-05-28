@@ -1,42 +1,51 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const API_KEY = 'c355f7b1bcc04ee880d3162730a17ac8'
+const API_KEY = 'c355f7b1bcc04ee880d3162730a17ac8';
+
+interface Ingredient {
+  id: number;
+  name: string;
+}
+
+interface Recipe {
+  id: number;
+  title: string;
+  image: string;
+  summary: string;
+  instructions: string;
+}
 
 const RecipeSearch = () => {
-  const [ingredientSearchQuery, setIngredientSearchQuery] = useState('')
-  const [ingredients, setIngredients] = useState([])
-  const [ingredientLoading, setIngredientLoading] = useState(false)
-  const [recipes, setRecipes] = useState([])
-  const [selectedRecipe, setSelectedRecipe] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [ingredientSearchQuery, setIngredientSearchQuery] = useState('');
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [ingredientLoading, setIngredientLoading] = useState(false);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const filteredIngredients = ingredients.filter((ingredient) =>
-    ingredient.name
-      .toLowerCase()
-      .includes(ingredientSearchQuery.toLowerCase().trim())
-  )
+    ingredient.name.toLowerCase().includes(ingredientSearchQuery.toLowerCase().trim())
+  );
 
   const searchByIngredients = () => {
     // Clear previous error messages
-    setErrorMessage('')
+    setErrorMessage('');
 
-    const query = ingredientSearchQuery.trim()
+    const query = ingredientSearchQuery.trim();
     if (query === '') {
-      setErrorMessage('Please enter at least one ingredient.')
-      return
+      setErrorMessage('Please enter at least one ingredient.');
+      return;
     }
 
-    const ingredients = query.split(',').map((ingredient) => ingredient.trim())
+    const ingredients = query.split(',').map((ingredient) => ingredient.trim());
 
     if (ingredients.some((ingredient) => ingredient.length < 2)) {
-      setErrorMessage(
-        'Each ingredient should have a minimum length of 2 characters.'
-      )
-      return
+      setErrorMessage('Each ingredient should have a minimum length of 2 characters.');
+      return;
     }
 
-    setIngredientLoading(true)
+    setIngredientLoading(true);
 
     axios
       .get('https://api.spoonacular.com/recipes/findByIngredients', {
@@ -46,23 +55,23 @@ const RecipeSearch = () => {
         }
       })
       .then((response) => {
-        setRecipes(response.data)
-        setSelectedRecipe(null)
+        setRecipes(response.data);
+        setSelectedRecipe(null);
         if (response.data.length === 0) {
-          setErrorMessage('No recipes found.')
+          setErrorMessage('No recipes found.');
         }
       })
       .catch((error) => {
-        console.error('Error fetching recipes:', error)
-        setErrorMessage('Error fetching recipes. Please try again.')
+        console.error('Error fetching recipes:', error);
+        setErrorMessage('Error fetching recipes. Please try again.');
       })
       .finally(() => {
-        setIngredientLoading(false)
-      })
-  }
+        setIngredientLoading(false);
+      });
+  };
 
-  const showIngredientRecipes = (ingredient) => {
-    setIngredientLoading(true)
+  const showIngredientRecipes = (ingredient: Ingredient) => {
+    setIngredientLoading(true);
 
     axios
       .get('https://api.spoonacular.com/recipes/findByIngredients', {
@@ -73,19 +82,19 @@ const RecipeSearch = () => {
         }
       })
       .then((response) => {
-        setRecipes(response.data)
-        setSelectedRecipe(null)
+        setRecipes(response.data);
+        setSelectedRecipe(null);
       })
       .catch((error) => {
-        console.error('Error fetching recipes:', error)
+        console.error('Error fetching recipes:', error);
       })
       .finally(() => {
-        setIngredientLoading(false)
-      })
-  }
+        setIngredientLoading(false);
+      });
+  };
 
-  const showRecipeDetails = (recipe) => {
-    setIngredientLoading(true)
+  const showRecipeDetails = (recipe: Recipe) => {
+    setIngredientLoading(true);
 
     axios
       .get(`https://api.spoonacular.com/recipes/${recipe.id}/information`, {
@@ -94,19 +103,19 @@ const RecipeSearch = () => {
         }
       })
       .then((response) => {
-        setSelectedRecipe(response.data)
+        setSelectedRecipe(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching recipe details:', error)
+        console.error('Error fetching recipe details:', error);
       })
       .finally(() => {
-        setIngredientLoading(false)
-      })
-  }
+        setIngredientLoading(false);
+      });
+  };
 
   const closeRecipeDetails = () => {
-    setSelectedRecipe(null)
-  }
+    setSelectedRecipe(null);
+  };
   const RecipeCard = ({ recipe }) => (
     <div className="flex flex-col items-center justify-between overflow-hidden rounded-md bg-white shadow-md">
       <img
