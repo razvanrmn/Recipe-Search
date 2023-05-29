@@ -18,7 +18,6 @@ const RecipeSearch = () => {
   )
 
   const searchByIngredients = () => {
-    // Clear previous error messages
     setErrorMessage('')
 
     const query = ingredientSearchQuery.trim()
